@@ -1,21 +1,26 @@
 <template>
-    <div class="mainArticle">
-        <MdPreview :editorId="id" :modelValue="article.text" :theme="article.theme" />
+    <div class="container">
+        <div class="mainArticle">
+            <MdPreview :editorId="id" :modelValue="article.text" :theme="article.theme" />
+        </div>
     </div>
-    <div class="right">
+    <div class="markdown-right">
         <MdCatalog :editorId="id" :scrollElement="scrollElement" />
     </div>
 </template>
 <script setup>
+import { reactive } from "vue"
+import { useRouter } from 'vue-router'
+import { MdPreview, MdCatalog } from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+
+
 // 定义传入变量
 const props = defineProps({
     msg: String,
 });
 
-import { reactive } from "vue"
-import { useRouter } from 'vue-router'
-import { MdPreview, MdCatalog } from 'md-editor-v3'
-import 'md-editor-v3/lib/style.css'
+
 
 const router = useRouter()
 const goToHomePage = () => {
@@ -32,17 +37,28 @@ const scrollElement = document.documentElement;
 
 
 <style scoped>
-.mainArticle {
-    display: grid;
-    justify-content: center;
-    margin: 0 20% 0 10%;
+.container {
+    margin: 4% 15% 0 0;
+    min-width: 70vh;
+    border-radius: 10px;
 }
 
-.right {
-    font-size: 90%;
-    position: fixed;
-    right: 10%;
-    top: 10%;
+.mainArticle {
+    transition: all 0.2s ease-in;
+    position: relative;
+    margin: 0 10% 0 10%;
+}
+
+.mainArticle:hover {
+    transform: translate(0, -3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-right {
+    font-size: 80%;
+    position: absolute;
+    right: 20%;
+    top: 5%;
 }
 </style>
 
