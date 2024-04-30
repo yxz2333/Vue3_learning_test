@@ -1,25 +1,33 @@
 export class Cursor {
     lerp = (a, b, n) => (1 - n) * a + n * b;   // 线性插值函数
 
-    constructor() {
+    constructor(dict) {
         this.pos = { curr: null, prev: null }; // 坐标
         this.create();
         this.init();
         this.render();
-        this.pt = ['a', 'button']
+        this.pt = { 'a': null, 'button': null };       // hover的tag属性，被什么父节点的类属性包裹
+        for (let key in dict) this.pt[key] = dict[key];
     }
 
     init() { // 给事件处理器属性设置函数
         document.onmouseover = event => {
-            for (let i of this.pt) {
-                if (event.target.tagName.toLowerCase() === i)
+            for (let _tag in this.pt) {
+                let _class = this.pt[_tag]
+                if (event.target.tagName.toLowerCase() === _tag && (_class === null || event.target.parentNode.className.toLowerCase().includes(_class))) {
+                    // 判断是否被一个父节点包裹
                     this.cursor.classList.add("hover");
+                    return
+                }
             }
         }
         document.onmouseout = event => {
-            for (let i of this.pt) {
-                if (event.target.tagName.toLowerCase() === i)
+            for (let _tag in this.pt) {
+                let _class = this.pt[_tag]
+                if (event.target.tagName.toLowerCase() === _tag && (_class === null || event.target.parentNode.className.toLowerCase().includes(_class))) {
                     this.cursor.classList.remove("hover");
+                    return
+                }
             }
         }
 

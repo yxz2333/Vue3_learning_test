@@ -28,23 +28,15 @@
 import { Cursor } from './api/Cursor/MouseCursor'
 import vueLive2d from 'vue-live2d'
 import Right from './components/RIght.vue'
-const cursor = () => new Cursor()
+const cursor = () => new Cursor({ 'span': 'md-editor-catalog-link' })
 cursor()
 </script>
 
 <style scoped>
-a {
-  font-weight: bolder;
-}
-
-nav {
-  font-size: xx-large;
-}
-
 #live2d {
   position: fixed;
   bottom: 0;
-  left: 0;
+  right: 0;
 }
 
 .container {
